@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import NavbarNotLoggedIn from './NavbarNotLoggedIn'
+import BootstrapNav from './BootstrapNav'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, handleSearch}) => (
   <div>
     <nav>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
+          <BootstrapNav loggedIn={true} handleSearch={handleSearch} />
           <a href="#" onClick={handleClick}>
             Logout
           </a>
@@ -19,11 +19,10 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
-          <NavbarNotLoggedIn />
+          <BootstrapNav loggedIn={false} handleSearch={handleSearch} />
         </div>
       )}
     </nav>
-    <hr />
   </div>
 )
 
