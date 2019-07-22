@@ -29,7 +29,9 @@ export const searchAlbums = search => async dispatch => {
   try {
     const query = `${rootUrl}?method=album.search&album=${search}&api_key=${apiKey}&format=json&limit=25`
     const searchResults = await axios.get(query)
-    dispatch(setAlbums(searchResults.data.results.albummatches.album))
+    const albums = searchResults.data.results.albummatches.album
+    console.log(albums)
+    dispatch(setAlbums(albums.filter(album => album.name !== '(null)')))
   } catch (err) {
     console.error(err)
   }

@@ -27,7 +27,6 @@ if (process.env.NODE_ENV === 'test') {
  * Node process on process.env
  */
 if (process.env.NODE_ENV !== 'production') require('../secrets')
-console.log(process.env)
 
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id))

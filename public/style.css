@@ -1,3 +1,7 @@
+body.mainbody {
+  background-color: #fffaf1;
+}
+
 a {
   text-decoration: none;
 }
@@ -22,4 +26,15 @@ form div {
 
 .bg-yellow {
   background-color: gold;
+}
+
+.albumsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  margin: 1em;
 }

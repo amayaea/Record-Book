@@ -6,6 +6,7 @@ import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import {connect} from 'react-redux'
 import {searchAlbums} from '../store'
+import {NavLink as Link} from 'react-router-dom'
 
 export class BootstrapNav extends Component {
   constructor() {
@@ -14,13 +15,19 @@ export class BootstrapNav extends Component {
       search: ''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
   }
 
   handleChange() {
     this.setState({
       search: event.target.value
     })
-    console.log(this.state)
+  }
+
+  // FIX ME
+  handleKeyDown(e) {
+    //console.log('in handle key')
+    if (e.key === 'Enter') this.props.handleSearch(this.state.search)
   }
 
   render() {
@@ -44,16 +51,22 @@ export class BootstrapNav extends Component {
             placeholder="Search"
             className="mr-sm-2"
             onChange={this.handleChange}
+            onKeyDown={this.handleKeyDown}
           />
-          <Button
-            variant="dark"
-            onClick={() => this.props.handleSearch(this.state.search)}
-          >
-            Search
-          </Button>
+          <Link to={`/search/${this.state.search}`}>
+            <Button
+              variant="dark"
+              onClick={() => this.props.handleSearch(this.state.search)}
+            >
+              Search
+            </Button>
+          </Link>
         </Form>
         {loggedIn ? (
-          <Nav.Link to="/user">Profile</Nav.Link>
+          <>
+            <Nav.Link to="/user">Profile</Nav.Link>
+            <Nav.Link to="/settings">Settings</Nav.Link>
+          </>
         ) : (
           <Nav.Link to="/login">Login</Nav.Link>
         )}
