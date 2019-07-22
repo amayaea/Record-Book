@@ -38,3 +38,24 @@ form div {
 .card {
   margin: 1em;
 }
+
+.media {
+  margin-left: 2em;
+}
+
+h1 {
+  margin-left: 30px;
+}
+
+.btn.btn-link {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-weight: 500;
+  font-size: 1em;
+  color: #212529;
+}
+
+a.dropdown-item.active {
+  background-color: #212529;
+}
