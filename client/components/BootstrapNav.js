@@ -68,7 +68,9 @@ export class BootstrapNav extends Component {
             <Nav.Link to="/settings">Settings</Nav.Link>
           </>
         ) : (
-          <Nav.Link to="/login">Login</Nav.Link>
+          <Nav.Link className="nav-link-right" to="/login">
+            Login
+          </Nav.Link>
         )}
         {/* <Nav.Link to="/signup">Sign Up</Nav.Link> */}
       </Navbar>

@@ -23,12 +23,10 @@ export class Albums extends Component {
   }
 
   handleSort(sortKey) {
-    console.log('props', this.props)
     this.props.sortAlbums(sortKey)
   }
 
   render() {
-    console.log(this.props)
     const search = this.props.match.params.input
     if (this.props.albums.length === 0) this.props.getAlbums(search)
     return (

@@ -37,7 +37,6 @@ export const searchAlbums = search => async dispatch => {
     const query = `${rootUrl}?method=album.search&album=${search}&api_key=${apiKey}&format=json&limit=26`
     const searchResults = await axios.get(query)
     const albums = searchResults.data.results.albummatches.album
-    console.log(albums)
     dispatch(
       setAlbums(
         albums.filter(
@@ -58,7 +57,6 @@ export default function(state = initialState, action) {
     case SET_ALBUMS:
       return action.albums
     case SORT_ALBUMS:
-      console.log(' in sort')
       return _.sortBy(state, [action.sortKey])
     default:
       return state
