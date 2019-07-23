@@ -11,7 +11,9 @@ export const AlbumViewCard = props => {
         <Card style={{width: '14rem'}} key={index}>
           <Card.Img variant="top" src={album.image[3]['#text']} />
           <Card.Body>
-            <Card.Title>{album.name}</Card.Title>
+            <Card.Title>
+              <Button variant="link">{album.name}</Button>
+            </Card.Title>
             <Card.Text>{album.artist}</Card.Text>
             <Button variant="dark">Go somewhere</Button>
           </Card.Body>

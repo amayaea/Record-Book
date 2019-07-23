@@ -2,7 +2,8 @@ import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
-function MyVerticallyCenteredModal(props) {
+export default function SingleAlbum(props) {
+  console.log('in actual modal')
   return (
     <Modal
       {...props}
@@ -12,7 +13,7 @@ function MyVerticallyCenteredModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
+          {props.album.name}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -29,22 +30,3 @@ function MyVerticallyCenteredModal(props) {
     </Modal>
   )
 }
-
-function App() {
-  const [modalShow, setModalShow] = React.useState(false)
-
-  return (
-    <ButtonToolbar>
-      <Button variant="primary" onClick={() => setModalShow(true)}>
-        Launch vertically centered modal
-      </Button>
-
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
-    </ButtonToolbar>
-  )
-}
-
-render(<App />)
