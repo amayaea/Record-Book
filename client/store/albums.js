@@ -39,9 +39,20 @@ export const searchAlbums = search => async dispatch => {
     const albums = searchResults.data.results.albummatches.album
     dispatch(
       setAlbums(
-        albums.filter(
-          album => album.name !== '(null)' && album.image[0]['#text'] !== ''
-        )
+        // A lot going on here, just santizing the results to only store the data that we actually need in the app
+        albums
+          .filter(
+            album => album.name !== '(null)' && album.image[0]['#text'] !== ''
+          )
+          .map(album => {
+            const newAlbum = {
+              name: album.name,
+              artist: album.artist,
+              imageUrl: album.image[3]['#text'],
+              mbid: album.mbid
+            }
+            return newAlbum
+          })
       )
     )
   } catch (err) {

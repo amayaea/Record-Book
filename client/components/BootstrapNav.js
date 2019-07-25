@@ -15,7 +15,7 @@ export class BootstrapNav extends Component {
       search: ''
     }
     this.handleChange = this.handleChange.bind(this)
-    this.handleKeyDown = this.handleKeyDown.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange() {
@@ -25,9 +25,9 @@ export class BootstrapNav extends Component {
   }
 
   // FIX ME
-  handleKeyDown(e) {
-    //console.log('in handle key')
-    if (e.key === 'Enter') this.props.handleSearch(this.state.search)
+  handleSubmit() {
+    console.log('submit')
+    this.props.handleSearch(this.state.search)
   }
 
   render() {
@@ -51,10 +51,11 @@ export class BootstrapNav extends Component {
             placeholder="Search"
             className="mr-sm-2"
             onChange={this.handleChange}
-            onKeyDown={this.handleKeyDown}
+            onSubmit={this.handleSubmit}
           />
           <Link to={`/search/${this.state.search}`}>
             <Button
+              type="submit"
               variant="dark"
               onClick={() => this.props.handleSearch(this.state.search)}
             >

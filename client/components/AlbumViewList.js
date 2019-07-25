@@ -7,7 +7,6 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 
 export const AlbumViewList = props => {
   const albums = props.albums
-  const [modalShow, setModalShow] = React.useState(false)
   return albums.map((album, index) => (
     <div key={index}>
       <Media>
@@ -15,28 +14,12 @@ export const AlbumViewList = props => {
           width={128}
           height={128}
           className="mr-3"
-          src={album.image[3]['#text']}
+          src={album.imageUrl}
           alt="Album Art"
         />
         <Media.Body>
           <h5>
-            <ButtonToolbar>
-              <Button
-                variant="link"
-                onClick={() => {
-                  setModalShow(true)
-                  console.log(modalShow)
-                  return (
-                    <SingleAlbum
-                      show={modalShow}
-                      onHide={() => setModalShow(false)}
-                    />
-                  )
-                }}
-              >
-                {album.name}
-              </Button>
-            </ButtonToolbar>
+            <SingleAlbum album={album} id={index} />
           </h5>
           <h6>{album.artist}</h6>
         </Media.Body>

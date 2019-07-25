@@ -9,7 +9,7 @@ export const AlbumViewCard = props => {
     <div className="albumsContainer">
       {albums.map((album, index) => (
         <Card style={{width: '14rem'}} key={index}>
-          <Card.Img variant="top" src={album.image[3]['#text']} />
+          <Card.Img variant="top" src={album.imageUrl} />
           <Card.Body>
             <Card.Title>
               <Button variant="link">{album.name}</Button>
