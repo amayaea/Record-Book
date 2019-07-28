@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Collection = require('./collection')
 
 const User = db.define('user', {
   email: {
@@ -63,7 +64,18 @@ const setSaltAndPassword = user => {
   }
 }
 
+const createCollections = async user => {
+  const collections = [
+    {name: 'Record Collection', userId: user.id, type: 'record'},
+    {name: 'Wantlist', userId: user.id, type: 'album'}
+  ]
+  await Promise.all(
+    collections.map(collection => Collection.create(collection))
+  )
+}
+
 User.beforeCreate(setSaltAndPassword)
+User.afterCreate(createCollections)
 User.beforeUpdate(setSaltAndPassword)
 User.beforeBulkCreate(users => {
   users.forEach(setSaltAndPassword)

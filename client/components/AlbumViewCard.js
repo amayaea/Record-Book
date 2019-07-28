@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import {SingleAlbum, AddToDropdown} from '../components'
 
 export const AlbumViewCard = props => {
   const albums = props.albums
@@ -15,7 +16,7 @@ export const AlbumViewCard = props => {
               <Button variant="link">{album.name}</Button>
             </Card.Title>
             <Card.Text>{album.artist}</Card.Text>
-            <Button variant="dark">Go somewhere</Button>
+            <AddToDropdown />
           </Card.Body>
         </Card>
       ))}

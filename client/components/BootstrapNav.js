@@ -24,7 +24,6 @@ export class BootstrapNav extends Component {
     })
   }
 
-  // FIX ME
   handleSubmit() {
     console.log('submit')
     this.props.handleSearch(this.state.search)
@@ -65,13 +64,11 @@ export class BootstrapNav extends Component {
         </Form>
         {loggedIn ? (
           <>
-            <Nav.Link to="/user">Profile</Nav.Link>
-            <Nav.Link to="/settings">Settings</Nav.Link>
+            <Nav.Link href={`/user/${this.props.user.id}`}>Profile</Nav.Link>
+            <Nav.Link href="/settings">Settings</Nav.Link>
           </>
         ) : (
-          <Nav.Link className="nav-link-right" to="/login">
-            Login
-          </Nav.Link>
+          <Nav.Link href="/login">Login</Nav.Link>
         )}
         {/* <Nav.Link to="/signup">Sign Up</Nav.Link> */}
       </Navbar>
@@ -79,8 +76,14 @@ export class BootstrapNav extends Component {
   }
 }
 
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
+
 const mapDispatch = dispatch => ({
   handleSearch: search => dispatch(searchAlbums(search))
 })
 
-export default connect(null, mapDispatch)(BootstrapNav)
+export default connect(mapState, mapDispatch)(BootstrapNav)

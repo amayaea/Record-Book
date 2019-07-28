@@ -51,7 +51,6 @@ class SingleAlbum extends Component {
           albumInfo.wiki.published.indexOf(',')
         )
       }
-      console.log(newAlbum)
       this.setState({
         selectedAlbum: newAlbum
       })

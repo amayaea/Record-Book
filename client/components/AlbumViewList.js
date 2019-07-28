@@ -1,9 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Media from 'react-bootstrap/Media'
-import Button from 'react-bootstrap/Button'
-import {SingleAlbum} from '../components'
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import {SingleAlbum, AddToDropdown} from '../components'
 
 export const AlbumViewList = props => {
   const albums = props.albums
@@ -22,6 +20,7 @@ export const AlbumViewList = props => {
             <SingleAlbum album={album} id={index} />
           </h5>
           <h6>{album.artist}</h6>
+          <AddToDropdown />
         </Media.Body>
       </Media>
       <br />
