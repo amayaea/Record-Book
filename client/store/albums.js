@@ -1,9 +1,5 @@
-import axios from 'axios'
-require('../../secrets')
 const _ = require('lodash')
-
-const apiKey = process.env.LASTFM_API_KEY
-const rootUrl = 'http://ws.audioscrobbler.com/2.0/'
+const dis = require('../../server/api/discogs')
 
 /**
  * ACTION TYPES
@@ -34,25 +30,30 @@ export const sortAlbums = sortKey => ({
  */
 export const searchAlbums = search => async dispatch => {
   try {
-    const query = `${rootUrl}?method=album.search&album=${search}&api_key=${apiKey}&format=json&limit=26`
-    const searchResults = await axios.get(query)
-    const albums = searchResults.data.results.albummatches.album
+    const data = await dis.search(search)
+    const results = data.results
     dispatch(
       setAlbums(
         // A lot going on here, just santizing the results to only store the data that we actually need in the app
-        albums
-          .filter(
-            album => album.name !== '(null)' && album.image[0]['#text'] !== ''
+        results.filter(result => result.type === 'release').map(album => {
+          const artistName = album.title.substring(
+            0,
+            album.title.indexOf('-') - 1
           )
-          .map(album => {
-            const newAlbum = {
-              name: album.name,
-              artist: album.artist,
-              imageUrl: album.image[3]['#text'],
-              mbid: album.mbid
-            }
-            return newAlbum
-          })
+          const albumName = album.title.substring(album.title.indexOf('-') + 2)
+          const newAlbum = {
+            id: album.id,
+            name: albumName,
+            artist: artistName,
+            imageUrl: album.cover_image,
+            genre: album.genre,
+            styles: album.style,
+            country: album.country,
+            label: album.label[0],
+            year: album.year
+          }
+          return newAlbum
+        })
       )
     )
   } catch (err) {

@@ -1,8 +1,4 @@
-import axios from 'axios'
-require('../../secrets')
-
-const apiKey = process.env.LASTFM_API_KEY
-const rootUrl = 'http://ws.audioscrobbler.com/2.0/'
+const dis = require('../../server/api/discogs')
 
 /**
  * ACTION TYPES
@@ -22,23 +18,21 @@ const setAlbum = album => ({
   album
 })
 
-export const getSingleAlbum = album => async dispatch => {
+export const getSingleAlbum = albumId => async dispatch => {
   try {
-    let query = `${rootUrl}?method=album.getinfo&api_key=${apiKey}`
-    if (album.mbid !== '') query = `${query}&mbid=${album.mbid}&format=json`
-    else
-      query = `${query}&artist=${album.artist}&album=${album.name}&format=json`
-    const searchResult = await axios.get(query)
-    const albumInfo = searchResult.data.album
+    const album = await dis.getRelease(albumId)
     const newAlbum = {
-      name: albumInfo.name,
-      artist: albumInfo.artist,
-      mbid: albumInfo.mbid,
-      imageUrl: albumInfo.image[3]['#text'],
-      genre: albumInfo.tags.tag[0],
-      summary: albumInfo.wiki.summary
+      id: album.id,
+      name: album.title,
+      artist: album.artists_sort,
+      imageUrl: album.images[0],
+      genre: album.genres[0],
+      styles: album.styles,
+      country: album.country,
+      label: album.labels[0],
+      tracklist: album.tracklist, // Albums store doesn't have this field only in single album
+      year: album.year
     }
-    console.log(newAlbum)
     dispatch(setAlbum(newAlbum))
   } catch (err) {
     console.error(err)

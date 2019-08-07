@@ -19,6 +19,10 @@ a.nav-link {
   color: #212529;
 }
 
+a {
+  color: #212529;
+}
+
 form div {
   margin: 1em;
   display: inline-block;

@@ -1,12 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 import Media from 'react-bootstrap/Media'
+import Button from 'react-bootstrap/Button'
 import {SingleAlbum, AddToDropdown} from '../components'
 
 export const AlbumViewList = props => {
   const albums = props.albums
-  return albums.map((album, index) => (
-    <div key={index}>
+  return albums.map(album => (
+    <div key={album.id}>
       <Media>
         <img
           width={128}
@@ -16,9 +18,11 @@ export const AlbumViewList = props => {
           alt="Album Art"
         />
         <Media.Body>
-          <h5>
-            <SingleAlbum album={album} id={index} />
-          </h5>
+          <h4>
+            <Button variant="link" href={`/album/${album.id}`}>
+              {album.name}
+            </Button>
+          </h4>
           <h6>{album.artist}</h6>
           <AddToDropdown />
         </Media.Body>

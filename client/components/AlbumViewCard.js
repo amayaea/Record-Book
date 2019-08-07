@@ -8,12 +8,14 @@ export const AlbumViewCard = props => {
   const albums = props.albums
   return (
     <div className="albumsContainer">
-      {albums.map((album, index) => (
-        <Card style={{width: '14rem'}} key={index}>
+      {albums.map(album => (
+        <Card style={{width: '14rem'}} key={album.id}>
           <Card.Img variant="top" src={album.imageUrl} />
           <Card.Body>
             <Card.Title>
-              <Button variant="link">{album.name}</Button>
+              <Button variant="link" href={`/album/${album.id}`}>
+                {album.name}
+              </Button>
             </Card.Title>
             <Card.Text>{album.artist}</Card.Text>
             <AddToDropdown />
