@@ -1,9 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {NavLink} from 'react-router-dom'
 import Media from 'react-bootstrap/Media'
 import Button from 'react-bootstrap/Button'
-import {SingleAlbum, AddToDropdown} from '../components'
+import {AddToDropdown} from '../components'
 
 export const AlbumViewList = props => {
   const albums = props.albums

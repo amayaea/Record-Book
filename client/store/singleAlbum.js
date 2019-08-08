@@ -21,15 +21,16 @@ const setAlbum = album => ({
 export const getSingleAlbum = albumId => async dispatch => {
   try {
     const album = await dis.getRelease(albumId)
+    console.log('discogs result', album)
     const newAlbum = {
       id: album.id,
       name: album.title,
       artist: album.artists_sort,
-      imageUrl: album.images[0],
+      imageUrl: album.images[0].resource_url,
       genre: album.genres[0],
       styles: album.styles,
       country: album.country,
-      label: album.labels[0],
+      labels: album.labels,
       tracklist: album.tracklist, // Albums store doesn't have this field only in single album
       year: album.year
     }

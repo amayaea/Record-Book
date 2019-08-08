@@ -49,7 +49,7 @@ export const searchAlbums = search => async dispatch => {
             genre: album.genre,
             styles: album.style,
             country: album.country,
-            label: album.label[0],
+            label: album.label,
             year: album.year
           }
           return newAlbum
