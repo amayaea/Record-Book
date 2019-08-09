@@ -1,16 +1,17 @@
 import React from 'react'
 import {Signup} from '../components'
+import Container from 'react-bootstrap/Container'
 
-const Welcome = props => {
+const Welcome = () => {
   return (
     <div className="welcome-container">
-      <div>
+      <Container>
         <h1>Welcome to</h1>
         <img className="welcome-logo" src="/images/logoLetters.png" />
         <p align="center">
           The best place to catalogue your vinyl collection online
         </p>
-      </div>
+      </Container>
       <div>
         <h1 className="create-account">Create a New Account:</h1>
         <h2>It's free!</h2>

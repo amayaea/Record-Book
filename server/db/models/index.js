@@ -1,14 +1,26 @@
 const User = require('./user')
 const Collection = require('./collection')
+const Record = require('./record')
+const Album = require('./album')
+const Style = require('./style')
+const Label = require('./label')
+const Format = require('./format')
 
-/**
- * If we had any associations to make, this would be a great place to put them!
- * ex. if we had another model called BlogPost, we might say:
- *
- *    BlogPost.belongsTo(User)
- */
 User.hasMany(Collection)
 Collection.belongsTo(User)
+
+Collection.hasMany(Record)
+Record.belongsTo(Collection)
+
+Album.hasMany(Record)
+Record.belongsTo(Album)
+
+Album.belongsToMany(Style, {through: 'albumStyle'})
+Style.belongsToMany(Album, {through: 'albumStyle'})
+Album.belongsToMany(Label, {through: 'albumLabel'})
+Label.belongsToMany(Album, {through: 'albumLabel'})
+Album.belongsToMany(Format, {through: 'albumFormat'})
+Format.belongsToMany(Album, {through: 'albumFormat'})
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -18,5 +30,10 @@ Collection.belongsTo(User)
  */
 module.exports = {
   User,
-  Collection
+  Collection,
+  Record,
+  Album,
+  Style,
+  Label,
+  Format
 }

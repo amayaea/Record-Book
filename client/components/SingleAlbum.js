@@ -1,20 +1,30 @@
 import React, {Component} from 'react'
-import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import {connect} from 'react-redux'
 import {getSingleAlbum} from '../store'
 import {AddToDropdown, Tracklist} from '../components'
 import Container from 'react-bootstrap/Container'
 import Media from 'react-bootstrap/Media'
+import history from '../history'
 
 const _ = require('lodash/lang')
 
 class SingleAlbum extends Component {
   componentDidMount() {
     const albumId = this.props.match.params.id
-    if (_.isEmpty(this.props.singleAlbum)) this.props.getAlbum(albumId)
-    console.log(this.props.singleAlbum)
+    if (_.isEmpty(this.props.singleAlbum)) {
+      if (this.props.match.path.includes('master'))
+        this.props.getAlbum(albumId, true)
+      this.props.getAlbum(albumId)
+    }
+    console.log(this.props)
   }
+
+  handleClick() {
+    const master = this.props.getAlbum(this.props.singleAlbum.masterId, true)
+    history.push(`/album/${master.id}`)
+  }
+
   render() {
     const album = this.props.singleAlbum
     return (
@@ -30,6 +40,14 @@ class SingleAlbum extends Component {
           <Media.Body bsPrefix="single-album-body">
             <h1>{album.name}</h1>
             <h4>Artist: {album.artist}</h4>
+            <h4>
+              Format:{' '}
+              {album.formats &&
+                album.formats.map((format, index) => {
+                  if (index === album.formats.length - 1) return `${format}`
+                  else return `${format}, `
+                })}
+            </h4>
             <h4>Genre: {album.genre}</h4>
             <h4>
               Labels:{' '}
@@ -37,7 +55,8 @@ class SingleAlbum extends Component {
                 album.labels.map((label, index) => {
                   if (index === album.labels.length - 1) return `${label.name}`
                   else return `${label.name}, `
-                })}
+                })}{' '}
+              - {album.identifier}
             </h4>
             <h4>
               Styles:{' '}
@@ -48,13 +67,22 @@ class SingleAlbum extends Component {
                 })}
             </h4>
             <h4>Country: {album.country}</h4>
-            <h4>Year: {album.year}</h4>
+            <h4>
+              Released: {album.year}{' '}
+              {/* For some reason Discogs won't let me get info on master releases bc of CORS policy? */}
+              {/* <Button variant="link" href={`/album/master/${album.masterId}`}>
+                See Master Release
+              </Button> */}
+            </h4>
             <br />
             <AddToDropdown />
           </Media.Body>
         </Media>
         <br />
         <Tracklist tracklist={album.tracklist} />
+        <br />
+        <h3>{album.notes !== undefined && 'About:'}</h3>
+        <p>{album.notes}</p>
       </Container>
     )
   }

@@ -6,7 +6,7 @@ const Collection = db.define('collection', {
     type: Sequelize.STRING
   },
   type: {
-    type: Sequelize.ENUM('album', 'record')
+    type: Sequelize.ENUM('collection', 'wantlist', 'custom')
   }
 })
 

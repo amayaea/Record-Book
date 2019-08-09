@@ -66,8 +66,8 @@ const setSaltAndPassword = user => {
 
 const createCollections = async user => {
   const collections = [
-    {name: 'Record Collection', userId: user.id, type: 'record'},
-    {name: 'Wantlist', userId: user.id, type: 'album'}
+    {name: 'Record Collection', userId: user.id, type: 'collection'},
+    {name: 'Wantlist', userId: user.id, type: 'wantlist'}
   ]
   await Promise.all(
     collections.map(collection => Collection.create(collection))

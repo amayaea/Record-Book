@@ -30,6 +30,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/search/:input" component={Albums} />
         <Route path="/album/:id" component={SingleAlbum} />
+        {/* <Route path="/album/master/:id" component={SingleAlbum} /> */}
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
