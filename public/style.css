@@ -80,8 +80,8 @@ a.dropdown-item.active {
 
 .loading-image {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 40%;
+  left: 40%;
   width: 360px;
   height: 360px;
   margin: -60px 0 0 -60px;

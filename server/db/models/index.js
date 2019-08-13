@@ -5,6 +5,11 @@ const Album = require('./album')
 const Style = require('./style')
 const Label = require('./label')
 const Format = require('./format')
+const Genre = require('./genre')
+const albumGenre = require('./albumGenre')
+const albumFormat = require('./albumFormat')
+const albumLabel = require('./albumLabel')
+const albumStyle = require('./albumStyle')
 
 User.hasMany(Collection)
 Collection.belongsTo(User)
@@ -15,19 +20,15 @@ Record.belongsTo(Collection)
 Album.hasMany(Record)
 Record.belongsTo(Album)
 
-Album.belongsToMany(Style, {through: 'albumStyle'})
-Style.belongsToMany(Album, {through: 'albumStyle'})
-Album.belongsToMany(Label, {through: 'albumLabel'})
-Label.belongsToMany(Album, {through: 'albumLabel'})
-Album.belongsToMany(Format, {through: 'albumFormat'})
-Format.belongsToMany(Album, {through: 'albumFormat'})
+Album.belongsToMany(Style, {through: albumStyle})
+Style.belongsToMany(Album, {through: albumStyle})
+Album.belongsToMany(Label, {through: albumLabel})
+Label.belongsToMany(Album, {through: albumLabel})
+Album.belongsToMany(Format, {through: albumFormat})
+Format.belongsToMany(Album, {through: albumFormat})
+Album.belongsToMany(Genre, {through: albumGenre})
+Genre.belongsToMany(Album, {through: albumGenre})
 
-/**
- * We'll export all of our models here, so that any time a module needs a model,
- * we can just require it from 'db/models'
- * for example, we can say: const {User} = require('../db/models')
- * instead of: const User = require('../db/models/user')
- */
 module.exports = {
   User,
   Collection,
@@ -35,5 +36,10 @@ module.exports = {
   Album,
   Style,
   Label,
-  Format
+  Format,
+  Genre,
+  albumStyle,
+  albumLabel,
+  albumFormat,
+  albumGenre
 }

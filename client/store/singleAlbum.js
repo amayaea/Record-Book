@@ -1,4 +1,6 @@
 const dis = require('../../server/api/discogs')
+import axios from 'axios'
+const _ = require('lodash/array')
 
 /**
  * ACTION TYPES
@@ -18,44 +20,68 @@ const setAlbum = album => ({
   album
 })
 
-// Helper function to get identifiers like barcode
-// const getIdenentifiers = array => {
-//   const filter = array.filter(iden => {
-//     return iden.type.toLowerCase() === 'barcode'
-//   })
-//   if (filter.length === 0 || filter.length > 1) return array[0]
-//   else return filter
-// }
-
 export const getSingleAlbum = (albumId, master) => async dispatch => {
   try {
     let album = {}
     if (master) {
       album = await dis.getMaster(albumId)
     } else album = await dis.getRelease(albumId)
-    let identifier
-    if (album.identifiers.length > 0) identifier = album.identifiers[0].value
-    else identifier = undefined
+
+    let identifiers
+    if (album.identifiers.length > 0) identifiers = album.identifiers
+    else identifiers = undefined
+
+    let notes
+    if (album.notes) notes = album.notes.substring(0, 1500)
+    else notes = undefined
+
+    let labels = album.labels.map(label => {
+      return label.name
+    })
+
     const newAlbum = {
       id: album.id,
       masterId: album.master_id,
-      identifier: identifier,
+      identifiers: identifiers,
       name: album.title,
       artist: album.artists_sort,
       imageUrl: album.images[0].resource_url,
-      genre: album.genres[0],
+      genre: album.genres,
       styles: album.styles,
       country: album.country,
-      labels: album.labels,
-      // Albums store doesn't have this field only in single album
-      // Also we aren't going to store tracklist in our database when users add records to collection
-      // Will have to make a request to see the tracklist if the user cares to view it from their
+      label: labels,
       tracklist: album.tracklist,
       year: album.year,
-      formats: album.formats[0].descriptions,
-      notes: album.notes
+      format: album.formats[0].descriptions,
+      notes: notes
     }
     dispatch(setAlbum(newAlbum))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const addTo = async (album, collectionName) => {
+  try {
+    console.log('in add to')
+    const labels = _.uniq(album.label)
+    const request = {
+      collection: collectionName,
+      album: {
+        id: album.id,
+        masterId: album.masterId,
+        name: album.name,
+        artist: album.artist,
+        imageUrl: album.imageUrl,
+        genre: album.genre,
+        styles: album.styles,
+        country: album.country,
+        label: labels,
+        year: album.year,
+        format: album.format
+      }
+    }
+    await axios.put('/api/collection', request)
   } catch (err) {
     console.error(err)
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import {SingleAlbum, AddToDropdown} from '../components'
+import {AddToDropdown} from '../components'
 
 export const AlbumViewCard = props => {
   const albums = props.albums
@@ -17,8 +17,17 @@ export const AlbumViewCard = props => {
                 {album.name}
               </Button>
             </Card.Title>
-            <Card.Text>{album.artist}</Card.Text>
-            <AddToDropdown />
+            <Card.Text>
+              <b>{album.artist}</b>
+              <br />
+              Format:{' '}
+              {album.format &&
+                album.format.map((format, index) => {
+                  if (index === album.format.length - 1) return `${format}`
+                  else return `${format}, `
+                })}
+            </Card.Text>
+            <AddToDropdown album={album} />
           </Card.Body>
         </Card>
       ))}

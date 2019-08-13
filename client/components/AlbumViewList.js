@@ -22,8 +22,16 @@ export const AlbumViewList = props => {
               {album.name}
             </Button>
           </h4>
-          <h6>{album.artist}</h6>
-          <AddToDropdown />
+          <h5>{album.artist}</h5>
+          <h6>
+            Format:{' '}
+            {album.format &&
+              album.format.map((format, index) => {
+                if (index === album.format.length - 1) return `${format}`
+                else return `${format}, `
+              })}
+          </h6>
+          <AddToDropdown album={album} />
         </Media.Body>
       </Media>
       <br />
