@@ -1,15 +1,52 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {CollectionTabs, LoadingScreen, AlbumCollection} from '../components'
+import {getCollections} from '../store/collection'
+import Container from 'react-bootstrap/Container'
+import Media from 'react-bootstrap/Media'
+import Image from 'react-bootstrap/Image'
 
-export const UserProfile = props => {
-  const {email} = props
+export class UserProfile extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      isLoading: true
+    }
+  }
 
-  return (
-    <div>
-      <h3>Welcome, {email} userprofile</h3>
-    </div>
-  )
+  componentDidMount() {
+    if (this.props.collection.length === 0) this.props.getCollections()
+  }
+
+  componentDidUpdate() {
+    if (this.state.isLoading) {
+      this.setState({
+        isLoading: false
+      })
+    }
+  }
+
+  render() {
+    if (this.state.isLoading) {
+      return <LoadingScreen />
+    } else {
+      return (
+        <Container>
+          <br />
+          <Media>
+            <Image src="/images/logo.png" roundedCircle />
+            <Media.Body>
+              <h3>{this.props.email}'s Profile</h3>
+              <p>What are you listening to?</p>
+            </Media.Body>
+          </Media>
+          <br />
+          <CollectionTabs collection={this.props.collection} />
+        </Container>
+      )
+    }
+  }
 }
 
 /**
@@ -17,11 +54,18 @@ export const UserProfile = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    collection: state.collection
   }
 }
 
-export default connect(mapState)(UserProfile)
+const mapDispatch = dispatch => {
+  return {
+    getCollections: () => dispatch(getCollections())
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserProfile)
 
 /**
  * PROP TYPES

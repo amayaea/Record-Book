@@ -14,10 +14,25 @@ const {
 } = require('../db/models')
 module.exports = router
 
+// Get all collections from a certain user
+router.get('/', async (req, res, next) => {
+  try {
+    const collections = await Collection.findAll({
+      where: {userId: req.user.id},
+      include: [
+        {model: Record, include: [{model: Album, include: [{model: Format}]}]}
+      ]
+    })
+    res.send(collections)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // Helper method to find the correct collection to add to
-const findCollection = async (user, collectionType) => {
+const findCollection = async (userId, collectionType) => {
   const collection = await Collection.findOne({
-    where: {type: collectionType, userId: user}
+    where: {type: collectionType, userId: userId}
   })
   return collection
 }

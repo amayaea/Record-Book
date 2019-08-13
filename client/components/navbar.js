@@ -12,9 +12,6 @@ const Navbar = ({handleClick, isLoggedIn, handleSearch}) => (
         <div>
           {/* The navbar will show these links after you log in */}
           <BootstrapNav loggedIn={true} handleSearch={handleSearch} />
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
         </div>
       ) : (
         <div>

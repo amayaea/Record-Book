@@ -58,18 +58,10 @@ class SingleAlbum extends Component {
             <Media.Body bsPrefix="single-album-body">
               <h1>{album.name}</h1>
               <h4>Artist: {album.artist}</h4>
-              <h4>Format: {album.formats && album.formats.join(', ')}</h4>
+              <h4>Format: {album.format && album.format.join(', ')}</h4>
               <h4>Genre: {album.genre && album.genre.join(', ')}</h4>
-              <h4>
-                Labels:{' '}
-                {album.labels &&
-                  album.labels.map((label, index) => {
-                    if (index === album.labels.length - 1)
-                      return `${label.name}`
-                    else return `${label.name}, `
-                  })}
-              </h4>
               <h4>Styles: {album.styles && album.styles.join(', ')}</h4>
+              <h4>Labels: {album.label && album.label.join(', ')}</h4>
               <h4>Country: {album.country}</h4>
               <h4>
                 Released: {album.year}{' '}

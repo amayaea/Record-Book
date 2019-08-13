@@ -105,3 +105,8 @@ a.dropdown-item.active {
     transform: rotate(360deg);
   }
 }
+
+.rounded-circle {
+  width: 15%;
+  height: 15%;
+}

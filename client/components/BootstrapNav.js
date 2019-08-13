@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import {connect} from 'react-redux'
 import {searchAlbums} from '../store'
 import {NavLink as Link} from 'react-router-dom'
+import {logout} from '../store'
 
 export class BootstrapNav extends Component {
   constructor() {
@@ -64,8 +65,12 @@ export class BootstrapNav extends Component {
         </Form>
         {loggedIn ? (
           <>
+            <Nav.Link href="/discover">Discover</Nav.Link>
             <Nav.Link href={`/user/${this.props.user.id}`}>Profile</Nav.Link>
             <Nav.Link href="/settings">Settings</Nav.Link>
+            <Nav.Link href="#" onClick={this.props.handleClick}>
+              Logout
+            </Nav.Link>
           </>
         ) : (
           <Nav.Link href="/login">Login</Nav.Link>
@@ -83,7 +88,10 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  handleSearch: search => dispatch(searchAlbums(search))
+  handleSearch: search => dispatch(searchAlbums(search)),
+  handleClick() {
+    dispatch(logout())
+  }
 })
 
 export default connect(mapState, mapDispatch)(BootstrapNav)

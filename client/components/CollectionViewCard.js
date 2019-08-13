@@ -4,11 +4,26 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import {AddToDropdown} from '../components'
 
-export const AlbumViewCard = props => {
-  const albums = props.albums
+export const CollectionViewCard = props => {
+  console.log(props)
+
+  const findCollection = collections => {
+    collections.forEach(collection => {
+      console.log(collection.type, props.type)
+      if (collection.type === props.type) {
+        console.log('match')
+        return collection
+      }
+    })
+    return undefined
+  }
+
+  const collection = findCollection(props.collection)
+  console.log(collection)
+
   return (
     <div className="albumsContainer">
-      {albums.map(album => (
+      {/* {collection.records.map(album => (
         <Card style={{width: '14rem'}} key={album.id}>
           <Card.Img variant="top" src={album.imageUrl} />
           <Card.Body>
@@ -25,15 +40,9 @@ export const AlbumViewCard = props => {
             <AddToDropdown album={album} />
           </Card.Body>
         </Card>
-      ))}
+      ))} */}
     </div>
   )
 }
 
-const mapState = state => {
-  return {
-    albums: state.albums
-  }
-}
-
-export default connect(mapState)(AlbumViewCard)
+export default CollectionViewCard
