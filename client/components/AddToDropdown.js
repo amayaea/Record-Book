@@ -7,8 +7,10 @@ import {addTo} from '../store'
 
 export const AddToDropdown = props => {
   const handleClick = (album, collectionName) => {
-    if (props.isLoggedIn) addTo(album, collectionName)
-    else history.push('/login')
+    if (props.isLoggedIn) {
+      if (collectionName === 'wantlilst') addTo(album, collectionName)
+      else history.push(`/add-to-collection/${album.id}`)
+    } else history.push('/login')
   }
 
   return (
@@ -17,7 +19,7 @@ export const AddToDropdown = props => {
         as="button"
         onClick={() => handleClick(props.album, 'collection')}
       >
-        Record Collection
+        Collection
       </Dropdown.Item>
       <Dropdown.Item
         as="button"

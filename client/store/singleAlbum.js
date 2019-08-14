@@ -61,7 +61,7 @@ export const getSingleAlbum = (albumId, master) => async dispatch => {
   }
 }
 
-export const addTo = async (album, collectionName) => {
+export const addTo = async (album, collectionName, recordInfo) => {
   try {
     console.log('in add to')
     const labels = _.uniq(album.label)
@@ -80,6 +80,9 @@ export const addTo = async (album, collectionName) => {
         year: album.year,
         format: album.format
       }
+    }
+    if (recordInfo) {
+      request.recordInfo = recordInfo
     }
     await axios.put('/api/collection', request)
   } catch (err) {

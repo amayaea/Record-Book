@@ -15,8 +15,8 @@ export class UserProfile extends React.Component {
     }
   }
 
-  componentDidMount() {
-    if (this.props.collection.length === 0) this.props.getCollections()
+  async componentDidMount() {
+    if (this.props.collection.length === 0) await this.props.getCollections()
   }
 
   componentDidUpdate() {

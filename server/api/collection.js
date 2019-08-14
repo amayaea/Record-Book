@@ -20,8 +20,14 @@ router.get('/', async (req, res, next) => {
     const collections = await Collection.findAll({
       where: {userId: req.user.id},
       include: [
-        {model: Record, include: [{model: Album, include: [{model: Format}]}]}
-      ]
+        {
+          model: Record,
+          include: [
+            {model: Album, include: [{model: Format, attributes: ['name']}]}
+          ]
+        }
+      ],
+      order: [['type', 'ASC']]
     })
     res.send(collections)
   } catch (err) {
@@ -100,12 +106,19 @@ router.put('/', async (req, res, next) => {
   try {
     const collection = await findCollection(req.user.id, req.body.collection)
     const album = await createAlbum(collection, req.body.album)
-    const record = await Record.create({
-      albumId: album.id,
-      collectionId: collection.id
+    const [instance, wasCreated] = await Record.findOrCreate({
+      where: {
+        albumId: album.id,
+        collectionId: collection.id
+      }
     })
-    if (req.collection === 'wantlist') {
-      console.log('wantlist')
+    if (req.body.recordInfo) {
+      await instance.update(req.body.recordInfo)
+      const wantlist = await findCollection(req.user.id, 'wantlist')
+      console.log('wantlist', wantlist.dataValues.id, instance.id)
+      await Record.destroy({
+        where: {collectionId: wantlist.dataValues.id, albumId: instance.albumId}
+      })
     }
     res.status(201).send('record added')
   } catch (err) {

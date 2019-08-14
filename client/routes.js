@@ -8,7 +8,8 @@ import {
   UserProfile,
   Albums,
   Welcome,
-  SingleAlbum
+  SingleAlbum,
+  AddToCollectionForm
 } from './components'
 import {me} from './store'
 
@@ -37,6 +38,10 @@ class Routes extends Component {
             <Route
               path={`/user/${this.props.user.id}`}
               component={UserProfile}
+            />
+            <Route
+              path="/add-to-collection/:id"
+              component={AddToCollectionForm}
             />
           </Switch>
         )}
