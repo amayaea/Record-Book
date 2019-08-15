@@ -2,6 +2,8 @@ const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
 const Collection = require('./collection')
+const raccoon = require('../../api/racoon')
+const Album = require('./album')
 
 const User = db.define('user', {
   email: {
@@ -80,3 +82,15 @@ User.beforeUpdate(setSaltAndPassword)
 User.beforeBulkCreate(users => {
   users.forEach(setSaltAndPassword)
 })
+
+// Prototype method to get reccomendations for user
+User.prototype.getRecs = async function() {
+  const albumIds = await raccoon.recommendFor(this.id, 20)
+  return Album.findAll({
+    where: {
+      id: {
+        [Sequelize.Op.in]: albumIds
+      }
+    }
+  })
+}

@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const raccoon = require('../../api/racoon')
 
 const Album = db.define('album', {
   masterId: {

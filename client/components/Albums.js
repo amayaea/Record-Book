@@ -18,9 +18,12 @@ export class Albums extends Component {
     this.handleSort = this.handleSort.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const search = this.props.match.params.input
-    if (this.props.albums.length === 0) this.props.getAlbums(search)
+    if (this.props.albums.length === 0) await this.props.getAlbums(search)
+    this.setState({
+      isLoading: false
+    })
   }
 
   componentDidUpdate() {

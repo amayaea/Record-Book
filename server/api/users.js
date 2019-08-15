@@ -16,6 +16,16 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/recs', async (req, res, next) => {
+  try {
+    const recs = await req.user.getRecs()
+    console.log(await req.user.getRecs())
+    res.send(recs)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:userId', async (req, res, next) => {
   try {
     const user = await User.findOne({

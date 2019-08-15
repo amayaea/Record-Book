@@ -2,7 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import {AddToDropdown} from '../components'
+import history from '../history'
+import {deleteFromCollection} from '../store'
 
 export const CollectionViewCard = props => {
   let collection
@@ -32,7 +33,40 @@ export const CollectionViewCard = props => {
                   else return `${format.name}, `
                 })}
             </Card.Text>
-            <AddToDropdown album={record.album} />
+            {collection.type === 'wantlist' ? (
+              <>
+                <Button
+                  variant="dark"
+                  onClick={() => {
+                    history.push(`/add-to-collection/${record.album.id}`)
+                  }}
+                >
+                  Add to Collection
+                </Button>
+              </>
+            ) : (
+              <div>
+                {record.sleeveCondition && (
+                  <span>
+                    Sleeve Condition: <strong>{record.sleeveCondition}</strong>{' '}
+                  </span>
+                )}
+                {record.mediaCondition && (
+                  <span>
+                    Media Condition: <strong>{record.mediaCondition}</strong>{' '}
+                  </span>
+                )}
+                Rating: <strong>{record.like ? 'Like' : 'Dislike'}</strong>
+              </div>
+            )}
+            <br />
+            <Button
+              variant="outline-dark"
+              size="sm"
+              onClick={() => props.deleteRecord(record.id)}
+            >
+              Delete
+            </Button>
           </Card.Body>
         </Card>
       ))}
@@ -40,4 +74,14 @@ export const CollectionViewCard = props => {
   )
 }
 
-export default CollectionViewCard
+const mapState = state => {
+  return {
+    collections: state.collections
+  }
+}
+
+const mapDispatch = dispatch => ({
+  deleteRecord: recordId => dispatch(deleteFromCollection(recordId))
+})
+
+export default connect(mapState, mapDispatch)(CollectionViewCard)

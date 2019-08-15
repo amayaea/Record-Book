@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {CollectionViewList, CollectionViewCard} from '.'
 import {withRouter} from 'react-router'
-import {sortAlbums} from '../store'
+import {sortCollections} from '../store'
 import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Container from 'react-bootstrap/Container'
@@ -24,7 +24,10 @@ export class Collection extends Component {
   }
 
   handleSort(sortKey) {
-    this.props.sortAlbums(sortKey)
+    console.log('sort')
+    let collection = 0
+    if (this.props.type === 'wantlist') collection = 1
+    this.props.sortCollections(sortKey, collection)
   }
 
   render() {
@@ -72,7 +75,8 @@ export class Collection extends Component {
 }
 
 const mapDispatch = dispatch => ({
-  sortAlbums: sortKey => dispatch(sortAlbums(sortKey))
+  sortCollections: (sortKey, collection) =>
+    dispatch(sortCollections(sortKey, collection))
 })
 
 export default withRouter(connect(null, mapDispatch)(Collection))

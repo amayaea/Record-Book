@@ -2,7 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Media from 'react-bootstrap/Media'
 import Button from 'react-bootstrap/Button'
-import {AddToDropdown} from '../components'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import {deleteFromCollection} from '../store'
 
 export const CollectionViewList = props => {
   let collection
@@ -21,22 +23,70 @@ export const CollectionViewList = props => {
           alt="Album Art"
         />
         <Media.Body>
-          <h4>
-            <Button variant="link" href={`/album/${record.album.id}`}>
-              {record.album.name}
+          <Row>
+            <Col>
+              <h4>
+                <Button variant="link" href={`/album/${record.album.id}`}>
+                  {record.album.name}
+                </Button>
+              </h4>
+              <h5>{record.album.artist}</h5>
+              <h6>
+                Format:{' '}
+                {record.album.formats &&
+                  record.album.formats.map((format, index) => {
+                    if (index === record.album.formats.length - 1)
+                      return format.name
+                    else return `${format.name}, `
+                  })}
+              </h6>
+            </Col>
+            {collection.type === 'wantlist' ? (
+              <div>
+                <br />
+                <Button
+                  variant="dark"
+                  className="collection"
+                  block={false}
+                  onClick={() => {
+                    history.push(`/add-to-collection/${record.album.id}`)
+                  }}
+                >
+                  Add to Collection
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <br />
+                {record.sleeveCondition && (
+                  <span>
+                    Sleeve Condition: <strong>{record.sleeveCondition}</strong>{' '}
+                  </span>
+                )}
+                <br />
+                {record.mediaCondition && (
+                  <span>
+                    Media Condition: <strong>{record.mediaCondition}</strong>{' '}
+                  </span>
+                )}
+                <br />
+                Rating: <strong>{record.like ? 'Like' : 'Dislike'}</strong>
+              </div>
+            )}
+
+            <br />
+            <br />
+
+            <Button
+              block={false}
+              variant="outline-dark"
+              className="collection-list"
+              size="sm"
+              onClick={() => props.deleteRecord(record.id)}
+            >
+              Delete
             </Button>
-          </h4>
-          <h5>{record.album.artist}</h5>
-          <h6>
-            Format:{' '}
-            {record.album.formats &&
-              record.album.formats.map((format, index) => {
-                if (index === record.album.formats.length - 1)
-                  return format.name
-                else return `${format.name}, `
-              })}
-          </h6>
-          <AddToDropdown album={record.album} />
+          </Row>
         </Media.Body>
       </Media>
       <br />
@@ -50,4 +100,8 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(CollectionViewList)
+const mapDispatch = dispatch => ({
+  deleteRecord: recordId => dispatch(deleteFromCollection(recordId))
+})
+
+export default connect(mapState, mapDispatch)(CollectionViewList)

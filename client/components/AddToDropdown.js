@@ -8,7 +8,7 @@ import {addTo} from '../store'
 export const AddToDropdown = props => {
   const handleClick = (album, collectionName) => {
     if (props.isLoggedIn) {
-      if (collectionName === 'wantlilst') addTo(album, collectionName)
+      if (collectionName === 'wantlist') props.addTo(album, collectionName)
       else history.push(`/add-to-collection/${album.id}`)
     } else history.push('/login')
   }
@@ -37,4 +37,8 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(AddToDropdown)
+const mapDispatch = dispatch => ({
+  addTo: (album, type, recordInfo) => dispatch(addTo(album, type, recordInfo))
+})
+
+export default connect(mapState, mapDispatch)(AddToDropdown)

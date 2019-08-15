@@ -20,9 +20,10 @@ const setCollections = collections => ({
   collections
 })
 
-export const sortAlbums = sortKey => ({
+export const sortCollections = (sortKey, collection) => ({
   type: SORT_COLLECTIONS,
-  sortKey
+  sortKey,
+  collection
 })
 
 /**
@@ -30,6 +31,16 @@ export const sortAlbums = sortKey => ({
  */
 export const getCollections = () => async dispatch => {
   try {
+    const collections = await axios.get('/api/collection')
+    dispatch(setCollections(collections.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const deleteFromCollection = recordId => async dispatch => {
+  try {
+    await axios.delete(`/api/collection/${recordId}`)
     const collections = await axios.get('/api/collection')
     dispatch(setCollections(collections.data))
   } catch (err) {
@@ -45,7 +56,14 @@ export default function(state = initialState, action) {
     case SET_COLLECTIONS:
       return action.collections
     case SORT_COLLECTIONS:
-      return _.sortBy(state, [action.sortKey])
+      const newState = [...state]
+      newState[action.collection].records = _.sortBy(
+        newState[action.collection].records,
+        function(record) {
+          return record.album[action.sortKey]
+        }
+      )
+      return newState
     default:
       return state
   }

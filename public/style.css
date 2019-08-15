@@ -110,3 +110,13 @@ a.dropdown-item.active {
   width: 15%;
   height: 15%;
 }
+
+.collection.btn.btn-dark {
+  height: 50%;
+}
+
+.collection-list.btn.btn-outline-dark {
+  height: 50%;
+  margin-left: 1em;
+  margin-top: 2em;
+}

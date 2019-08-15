@@ -9,7 +9,8 @@ import {
   Albums,
   Welcome,
   SingleAlbum,
-  AddToCollectionForm
+  AddToCollectionForm,
+  Discover
 } from './components'
 import {me} from './store'
 
@@ -43,6 +44,7 @@ class Routes extends Component {
               path="/add-to-collection/:id"
               component={AddToCollectionForm}
             />
+            <Route path="/discover" component={Discover} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

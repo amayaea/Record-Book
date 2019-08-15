@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {CollectionTabs, LoadingScreen, AlbumCollection} from '../components'
+import {CollectionTabs, LoadingScreen} from '../components'
 import {getCollections} from '../store/collection'
 import Container from 'react-bootstrap/Container'
 import Media from 'react-bootstrap/Media'
@@ -17,6 +17,7 @@ export class UserProfile extends React.Component {
 
   async componentDidMount() {
     if (this.props.collection.length === 0) await this.props.getCollections()
+    this.setState({isLoading: false})
   }
 
   componentDidUpdate() {

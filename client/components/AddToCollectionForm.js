@@ -3,7 +3,6 @@ import {SingleAlbumMedia} from '../components'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import {getSingleAlbum, addTo} from '../store'
@@ -49,10 +48,10 @@ export class AddToCollectionForm extends Component {
     console.log(this.state)
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
     console.log('prevent')
-    addTo(this.props.singleAlbum, 'collection', this.state)
+    await this.props.addTo(this.props.singleAlbum, 'collection', this.state)
     history.push(`/user/${this.props.user.id}`)
   }
 
@@ -136,7 +135,8 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  getAlbum: album => dispatch(getSingleAlbum(album))
+  getAlbum: album => dispatch(getSingleAlbum(album)),
+  addTo: (album, type, recordInfo) => dispatch(addTo(album, type, recordInfo))
 })
 
 export default connect(mapState, mapDispatch)(AddToCollectionForm)

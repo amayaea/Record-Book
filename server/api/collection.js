@@ -60,48 +60,57 @@ const createAlbum = async (collection, album) => {
     })
 
     // Assigning all the many-to-many relationships
-    await Promise.all(
-      album.genre.map(async genre => {
-        const genreInstance = await Genre.findOrCreate({where: {name: genre}})
-        await albumGenre.create({
-          albumId: instance.id,
-          genreId: genreInstance[0].dataValues.id
+    if (album.genre) {
+      await Promise.all(
+        album.genre.map(async genre => {
+          const genreInstance = await Genre.findOrCreate({where: {name: genre}})
+          await albumGenre.create({
+            albumId: instance.id,
+            genreId: genreInstance[0].dataValues.id
+          })
         })
-      })
-    )
-    await Promise.all(
-      album.styles.map(async style => {
-        const styleInstance = await Style.findOrCreate({where: {name: style}})
-        await albumStyle.create({
-          albumId: instance.id,
-          styleId: styleInstance[0].dataValues.id
+      )
+    }
+    if (album.styles) {
+      await Promise.all(
+        album.styles.map(async style => {
+          const styleInstance = await Style.findOrCreate({where: {name: style}})
+          await albumStyle.create({
+            albumId: instance.id,
+            styleId: styleInstance[0].dataValues.id
+          })
         })
-      })
-    )
-    await Promise.all(
-      album.label.map(async label => {
-        const labelInstance = await Label.findOrCreate({where: {name: label}})
-        await albumLabel.create({
-          albumId: instance.id,
-          labelId: labelInstance[0].dataValues.id
+      )
+    }
+    if (album.label) {
+      await Promise.all(
+        album.label.map(async label => {
+          const labelInstance = await Label.findOrCreate({where: {name: label}})
+          await albumLabel.create({
+            albumId: instance.id,
+            labelId: labelInstance[0].dataValues.id
+          })
         })
-      })
-    )
-    await Promise.all(
-      album.format.map(async format => {
-        const formatInstance = await Format.findOrCreate({
-          where: {name: format}
+      )
+    }
+    if (album.format) {
+      await Promise.all(
+        album.format.map(async format => {
+          const formatInstance = await Format.findOrCreate({
+            where: {name: format}
+          })
+          await albumFormat.create({
+            albumId: instance.id,
+            formatId: formatInstance[0].dataValues.id
+          })
         })
-        await albumFormat.create({
-          albumId: instance.id,
-          formatId: formatInstance[0].dataValues.id
-        })
-      })
-    )
+      )
+    }
   }
   return instance
 }
 
+// Adds an album to a collection
 router.put('/', async (req, res, next) => {
   try {
     const collection = await findCollection(req.user.id, req.body.collection)
@@ -114,13 +123,26 @@ router.put('/', async (req, res, next) => {
     })
     if (req.body.recordInfo) {
       await instance.update(req.body.recordInfo)
+      // If record existed in wantlist and is moved to collection then delete from wantlist
       const wantlist = await findCollection(req.user.id, 'wantlist')
-      console.log('wantlist', wantlist.dataValues.id, instance.id)
       await Record.destroy({
         where: {collectionId: wantlist.dataValues.id, albumId: instance.albumId}
       })
     }
     res.status(201).send('record added')
+  } catch (err) {
+    next(err)
+  }
+})
+
+// Deletes a record from a collection
+router.delete('/:recordId', async (req, res, next) => {
+  console.log('delete route')
+  try {
+    await Record.destroy({
+      where: {id: req.params.recordId}
+    })
+    res.status(204).send('record deleted')
   } catch (err) {
     next(err)
   }
