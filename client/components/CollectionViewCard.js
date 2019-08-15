@@ -62,6 +62,7 @@ export const CollectionViewCard = props => {
                 </div>
               )}
               <br />
+              <br />
               <Button
                 variant="outline-dark"
                 size="sm"

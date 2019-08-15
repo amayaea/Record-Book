@@ -44,7 +44,7 @@ class Routes extends Component {
               path="/add-to-collection/:id"
               component={AddToCollectionForm}
             />
-            <Route path="/discover" component={Discover} />
+            <Route path="/discover/:page" component={Discover} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

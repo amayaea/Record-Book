@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 const _ = require('lodash')
 const dis = require('../../server/api/discogs')
 
@@ -59,6 +61,27 @@ export const searchAlbums = search => async dispatch => {
         })
       )
     )
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const getRecs = () => async dispatch => {
+  try {
+    const recs = await axios.get('/api/users/recs')
+    dispatch(setAlbums(recs.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const getBest = key => async dispatch => {
+  try {
+    let albums
+    if (key === 'best-rated')
+      albums = await axios.get('/api/collection/best-rated')
+    else albums = await axios.get('/api/collection/most-popular')
+    dispatch(setAlbums(albums.data))
   } catch (err) {
     console.error(err)
   }

@@ -12,6 +12,7 @@ const {
   albumFormat,
   albumGenre
 } = require('../db/models')
+const racoon = require('./racoon')
 
 // Get all collections from a certain user
 router.get('/', async (req, res, next) => {
@@ -29,6 +30,26 @@ router.get('/', async (req, res, next) => {
       order: [['type', 'ASC']]
     })
     res.send(collections)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// Gets most popular albums across entire platform
+router.get('/most-popular', async (req, res, next) => {
+  try {
+    const pop = await racoon.mostLiked()
+    res.send(pop)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// Gets most best rated albums across entire platform
+router.get('/best-rated', async (req, res, next) => {
+  try {
+    const best = await racoon.bestRated()
+    res.send(best)
   } catch (err) {
     next(err)
   }

@@ -19,6 +19,7 @@ async function seed() {
     User.create({email: '6@email.com', password: '123'})
   ])
 
+  // jimi hendrix like albums
   const hendrix = [
     1435384,
     2237319,
@@ -32,6 +33,7 @@ async function seed() {
     499497
   ]
 
+  // houses of the holy like albums
   const houses = [
     577498,
     1182335,
@@ -45,6 +47,7 @@ async function seed() {
     409199
   ]
 
+  // magical mystery tour like albums
   const magical = [
     464292,
     377554,
@@ -56,6 +59,7 @@ async function seed() {
     1436445
   ]
 
+  // congratulations by MGMT like albums
   const congrats = [
     2591885,
     4570366,
@@ -68,6 +72,7 @@ async function seed() {
     2606952
   ]
 
+  // demon days like albums
   const demon = [
     474703,
     4570366,
@@ -80,6 +85,7 @@ async function seed() {
     2606952
   ]
 
+  // to pimp a butterfly like albums
   const tpab = [
     7557957,
     10689178,

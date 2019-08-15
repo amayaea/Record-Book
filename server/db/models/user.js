@@ -92,7 +92,6 @@ User.beforeBulkCreate(users => {
 // Prototype method to get reccomendations for user
 User.prototype.getRecs = async function() {
   const albumIds = await raccoon.recommendFor(this.id, 20)
-  console.log('albumIds', albumIds)
   return Album.findAll({
     where: {
       id: {
