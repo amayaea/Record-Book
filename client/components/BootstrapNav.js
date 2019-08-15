@@ -26,7 +26,6 @@ export class BootstrapNav extends Component {
   }
 
   handleSubmit() {
-    console.log('submit')
     this.props.handleSearch(this.state.search)
   }
 

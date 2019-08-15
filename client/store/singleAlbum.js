@@ -64,7 +64,6 @@ export const getSingleAlbum = (albumId, master) => async dispatch => {
 
 export const addTo = (album, collectionName, recordInfo) => async dispatch => {
   try {
-    console.log('in add to')
     const labels = _.uniq(album.label)
     const request = {
       collection: collectionName,

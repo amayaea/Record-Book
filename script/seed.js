@@ -1,17 +1,123 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Collection} = require('../server/db/models')
+const {User, Record, Collection, Album} = require('../server/db/models')
+const {createAlbum} = require('../server/api/collection')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
+  // Seed file does not give true album data but is used to test racoon.
+
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({email: '1@email.com', password: '123'}),
+    User.create({email: '2@email.com', password: '123'}),
+    User.create({email: '3@email.com', password: '123'}),
+    User.create({email: '4@email.com', password: '123'}),
+    User.create({email: '5@email.com', password: '123'}),
+    User.create({email: '6@email.com', password: '123'})
   ])
 
+  const hendrix = [
+    1435384,
+    2237319,
+    399579,
+    367104,
+    526319,
+    1182335,
+    5734419,
+    2498807,
+    7097051,
+    499497
+  ]
+
+  const houses = [
+    577498,
+    1182335,
+    5734419,
+    2704479,
+    526569,
+    463597,
+    495664,
+    556030,
+    3492494,
+    409199
+  ]
+
+  const magical = [
+    464292,
+    377554,
+    2498807,
+    526351,
+    1044287,
+    2911293,
+    1108650,
+    1436445
+  ]
+
+  const congrats = [
+    2591885,
+    4570366,
+    1304590,
+    3937552,
+    2440818,
+    667892,
+    623525,
+    6900583,
+    2606952
+  ]
+
+  const demon = [
+    474703,
+    4570366,
+    10175557,
+    152332,
+    3975953,
+    6932044,
+    204021,
+    242785,
+    2606952
+  ]
+
+  const tpab = [
+    7557957,
+    10689178,
+    8329749,
+    4570366,
+    5174308,
+    242785,
+    233445,
+    5528785,
+    4842692
+  ]
+  const collections = [hendrix, houses, magical, congrats, demon, tpab]
+
+  for (let i = 0; i < collections.length; i++) {
+    const user = await User.findByPk(i + 1)
+    const collection = await Collection.findOne({
+      where: {userId: user.id, type: 'wantlist'}
+    })
+    for (let j = 0; j < collections[i].length; j++) {
+      const album = {id: collections[i][j]}
+      await createAlbum(null, album)
+      await Record.create({
+        collectionId: collection.id,
+        albumId: collections[i][j]
+      })
+    }
+  }
+
+  // Testing racoon
+  for (let i = 1; i < 2; i++) {
+    const user = await User.findByPk(i)
+    const recs = await user.getRecs()
+    console.log(
+      recs.map(item => {
+        return item.id
+      })
+    )
+  }
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }

@@ -29,6 +29,12 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  name: {
+    type: Sequelize.STRING
+  },
+  userName: {
+    type: Sequelize.STRING
   }
 })
 
@@ -68,8 +74,8 @@ const setSaltAndPassword = user => {
 
 const createCollections = async user => {
   const collections = [
-    {name: 'Record Collection', userId: user.id, type: 'collection'},
-    {name: 'Wantlist', userId: user.id, type: 'wantlist'}
+    {userId: user.id, type: 'collection'},
+    {userId: user.id, type: 'wantlist'}
   ]
   await Promise.all(
     collections.map(collection => Collection.create(collection))
@@ -86,6 +92,7 @@ User.beforeBulkCreate(users => {
 // Prototype method to get reccomendations for user
 User.prototype.getRecs = async function() {
   const albumIds = await raccoon.recommendFor(this.id, 20)
+  console.log('albumIds', albumIds)
   return Album.findAll({
     where: {
       id: {

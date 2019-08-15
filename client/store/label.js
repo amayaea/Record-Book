@@ -21,7 +21,7 @@ const setLabel = label => ({
 export const getSingleAlbum = labelId => async dispatch => {
   try {
     const label = await dis.getLabelReleases(labelId)
-    console.log('discogs result', label)
+
     // const newLabel = {test: 'test'}
     dispatch(setLabel(label))
   } catch (err) {

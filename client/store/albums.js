@@ -40,7 +40,7 @@ export const searchAlbums = search => async dispatch => {
             0,
             album.title.indexOf('-') - 1
           )
-          console.log('discogs results', album)
+
           const albumName = album.title.substring(album.title.indexOf('-') + 2)
           const newAlbum = {
             id: album.id,

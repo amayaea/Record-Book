@@ -12,7 +12,6 @@ const {
   albumFormat,
   albumGenre
 } = require('../db/models')
-module.exports = router
 
 // Get all collections from a certain user
 router.get('/', async (req, res, next) => {
@@ -137,7 +136,6 @@ router.put('/', async (req, res, next) => {
 
 // Deletes a record from a collection
 router.delete('/:recordId', async (req, res, next) => {
-  console.log('delete route')
   try {
     await Record.destroy({
       where: {id: req.params.recordId}
@@ -147,3 +145,5 @@ router.delete('/:recordId', async (req, res, next) => {
     next(err)
   }
 })
+
+module.exports = {router, createAlbum}

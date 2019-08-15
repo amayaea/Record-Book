@@ -24,7 +24,6 @@ export class Collection extends Component {
   }
 
   handleSort(sortKey) {
-    console.log('sort')
     let collection = 0
     if (this.props.type === 'wantlist') collection = 1
     this.props.sortCollections(sortKey, collection)

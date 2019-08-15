@@ -25,7 +25,6 @@ export class AddToCollectionForm extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props)
     const albumId = this.props.match.params.id
     if (_.isEmpty(this.props.singleAlbum)) {
       if (this.props.match.path.includes('master'))
@@ -38,19 +37,16 @@ export class AddToCollectionForm extends Component {
     await this.setState({
       [event.target.name]: event.target.value
     })
-    console.log(this.state)
   }
 
   async handleLike(event) {
     await this.setState({
       like: event
     })
-    console.log(this.state)
   }
 
   async handleSubmit(event) {
     event.preventDefault()
-    console.log('prevent')
     await this.props.addTo(this.props.singleAlbum, 'collection', this.state)
     history.push(`/user/${this.props.user.id}`)
   }
