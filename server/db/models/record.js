@@ -16,6 +16,7 @@ const Record = db.define('record', {
 
 // Sequelize hooks to implement racoon recommendation engine
 Record.afterCreate(async record => {
+  console.log('create')
   const collection = await record.getCollection()
   const user = await collection.getUser()
   if (record.like === true || undefined)
@@ -24,6 +25,7 @@ Record.afterCreate(async record => {
 })
 
 Record.afterUpdate(async record => {
+  console.log('update')
   const collection = await record.getCollection()
   const user = await collection.getUser()
   const prev = record._previousDataValues
@@ -39,7 +41,8 @@ Record.afterUpdate(async record => {
   }
 })
 
-Record.afterDestroy(async record => {
+Record.beforeDestroy(async record => {
+  console.log('destroy')
   const collection = await record.getCollection()
   const user = await collection.getUser()
   if (record.like === true || undefined) {

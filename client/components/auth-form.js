@@ -2,6 +2,10 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import Container from 'react-bootstrap/Container'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
 
 /**
  * COMPONENT
@@ -10,37 +14,51 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
+    <Container>
+      <Form onSubmit={handleSubmit} name={name}>
+        <Row>
+          <Form.Group controlId="email">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" />
+          </Form.Group>
+        </Row>
+
+        {/* <div>
           <label htmlFor="email">
             <small>Email</small>
           </label>
           <input name="email" type="text" />
-        </div>
-        <div>
+        </div> */}
+        <Row>
+          <Form.Group controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" placeholder="Password" />
+          </Form.Group>
+        </Row>
+        {/* <div>
           <label htmlFor="password">
             <small>Password</small>
           </label>
           <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
+        </div> */}
+        <Row>
+          <Button variant="dark" type="submit">
+            {displayName}
+          </Button>
+        </Row>
         {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </div>
+        <Row>
+          <Button variant="dark" href="/auth/google">
+            {displayName} with Google
+          </Button>
+        </Row>
+      </Form>
+
+      {/* <a href="/auth/google">{displayName} with Google</a> */}
+    </Container>
   )
 }
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
 const mapLogin = state => {
   return {
     name: 'login',

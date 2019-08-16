@@ -9,10 +9,7 @@ const Welcome = () => {
         <br />
         <h1>Welcome to</h1>
         <img className="welcome-logo" src="/images/logoLetters.png" />
-        <p align="center">
-          The best place to catalogue your vinyl collection online and discover
-          new music.
-        </p>
+        <p align="center">Vinyl Collecting for the Internet Age</p>
       </div>
       <div>
         <br />
