@@ -20,7 +20,8 @@ export const AlbumViewCard = props => {
             <Card.Text>
               <b>{album.artist}</b>
               <br />
-              Format: {album.format && album.format.join(', ')}
+              {!props.discover &&
+                `Format: ${album.format && album.format.join(', ')}`}
             </Card.Text>
             <AddToDropdown album={album} />
           </Card.Body>

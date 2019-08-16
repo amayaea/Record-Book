@@ -70,7 +70,7 @@ a.dropdown-item.active {
 }
 
 .welcome-logo {
-  max-width: 90%;
+  max-width: 99%;
   height: auto;
 }
 
@@ -112,11 +112,25 @@ a.dropdown-item.active {
 }
 
 .collection.btn.btn-dark {
-  height: 50%;
+  margin-top: 4px;
 }
 
-.collection-list.btn.btn-outline-dark {
+.btn.btn-outline-warning.btn-sm {
+  margin-left: 1em;
+}
+
+.collection-list.btn-sm.btn-outline-dark {
   height: 50%;
   margin-left: 1em;
   margin-top: 2em;
+}
+
+.collection-list.btn.btn-outline-warning {
+  height: 50%;
+  margin-left: 1em;
+  margin-top: 2em;
+}
+
+.navbar-brand {
+  color: #212529;
 }

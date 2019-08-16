@@ -69,6 +69,7 @@ export const searchAlbums = search => async dispatch => {
 export const getRecs = () => async dispatch => {
   try {
     const recs = await axios.get('/api/users/recs')
+    console.log(recs)
     dispatch(setAlbums(recs.data))
   } catch (err) {
     console.error(err)

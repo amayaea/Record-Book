@@ -66,7 +66,7 @@ export class Discover extends Component {
         <div>
           <br />
           <Container>
-            <h1>Discover</h1>
+            <h2>Discover</h2>
             <Tabs
               activeKey={page}
               id="uncontrolled-tab-example"
@@ -85,6 +85,7 @@ export class Discover extends Component {
           ) : (
             <>
               <Container>
+                <br />
                 <Nav>
                   <NavDropdown
                     className="view-dropdown"
@@ -114,11 +115,11 @@ export class Discover extends Component {
 
               {this.state.display === 'list' ? (
                 <Container>
-                  <AlbumViewList />
+                  <AlbumViewList discover={true} />
                 </Container>
               ) : (
                 <Container>
-                  <AlbumViewCard />
+                  <AlbumViewCard discover={true} />
                 </Container>
               )}
             </>

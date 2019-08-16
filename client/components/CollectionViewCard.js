@@ -38,6 +38,7 @@ export const CollectionViewCard = props => {
                 <>
                   <Button
                     variant="dark"
+                    size="sm"
                     onClick={() => {
                       history.push(`/add-to-collection/${record.album.id}`)
                     }}
@@ -70,6 +71,17 @@ export const CollectionViewCard = props => {
               >
                 Delete
               </Button>
+              {collection.type === 'collection' && (
+                <Button
+                  variant="outline-warning"
+                  size="sm"
+                  block={false}
+                  onClick={() => props.deleteRecord(record.id)}
+                  href={`/add-to-collection/${record.album.id}`}
+                >
+                  Update
+                </Button>
+              )}
             </Card.Body>
           </Card>
         ))}

@@ -17,6 +17,7 @@ export class BootstrapNav extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.redirect = this.redirect.bind(this)
   }
 
   handleChange() {
@@ -29,11 +30,16 @@ export class BootstrapNav extends Component {
     this.props.handleSearch(this.state.search)
   }
 
+  redirect() {
+    if (this.props.loggedIn) return '/discover/for-you'
+    else return '/'
+  }
+
   render() {
     const loggedIn = this.props.loggedIn
     return (
       <Navbar bg="yellow" variant="primary">
-        <Navbar.Brand>
+        <Navbar.Brand href={this.redirect()}>
           <img
             alt=""
             src="/images/logo.png"

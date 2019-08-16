@@ -13,6 +13,7 @@ const {
   albumGenre
 } = require('../db/models')
 const racoon = require('./racoon')
+const Sequelize = require('sequelize')
 
 // Get all collections from a certain user
 router.get('/', async (req, res, next) => {
@@ -39,7 +40,15 @@ router.get('/', async (req, res, next) => {
 router.get('/most-popular', async (req, res, next) => {
   try {
     const pop = await racoon.mostLiked()
-    res.send(pop)
+    const albums = await Album.findAll({
+      where: {
+        id: {
+          [Sequelize.Op.in]: pop
+        }
+      },
+      include: [{model: Format}]
+    })
+    res.send(albums)
   } catch (err) {
     next(err)
   }
@@ -49,7 +58,15 @@ router.get('/most-popular', async (req, res, next) => {
 router.get('/best-rated', async (req, res, next) => {
   try {
     const best = await racoon.bestRated()
-    res.send(best)
+    const albums = await Album.findAll({
+      where: {
+        id: {
+          [Sequelize.Op.in]: best
+        }
+      },
+      include: [{model: Format}]
+    })
+    res.send(albums)
   } catch (err) {
     next(err)
   }

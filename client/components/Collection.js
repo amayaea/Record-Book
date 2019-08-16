@@ -11,7 +11,7 @@ export class Collection extends Component {
   constructor() {
     super()
     this.state = {
-      display: 'grid'
+      display: 'list'
     }
     this.setDisplay = this.setDisplay.bind(this)
     this.handleSort = this.handleSort.bind(this)

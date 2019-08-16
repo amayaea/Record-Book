@@ -32,6 +32,8 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/search/:input" component={Albums} />
         <Route path="/album/:id" component={SingleAlbum} />
+        <Route exact path="/" component={Welcome} />
+
         {/* <Route path="/album/master/:id" component={SingleAlbum} /> */}
         {isLoggedIn && (
           <Switch>
@@ -47,8 +49,6 @@ class Routes extends Component {
             <Route path="/discover/:page" component={Discover} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback */}
-        <Route component={Welcome} />
       </Switch>
     )
   }

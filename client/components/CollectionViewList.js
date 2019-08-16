@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import {deleteFromCollection} from '../store'
+import history from '../history'
 
 export const CollectionViewList = props => {
   let collection
@@ -46,8 +47,9 @@ export const CollectionViewList = props => {
                 <br />
                 <Button
                   variant="dark"
+                  size="sm"
                   className="collection"
-                  block={false}
+                  block={true}
                   onClick={() => {
                     history.push(`/add-to-collection/${record.album.id}`)
                   }}
@@ -86,6 +88,17 @@ export const CollectionViewList = props => {
             >
               Delete
             </Button>
+            {collection.type === 'collection' && (
+              <Button
+                block={false}
+                variant="outline-warning"
+                className="collection-list"
+                size="sm"
+                href={`/add-to-collection/${record.album.id}`}
+              >
+                Update
+              </Button>
+            )}
           </Row>
         </Media.Body>
       </Media>

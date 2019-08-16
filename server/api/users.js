@@ -1,6 +1,7 @@
 const router = require('express').Router()
-const {User, Collection} = require('../db/models')
+const {User, Collection, Format, Album} = require('../db/models')
 module.exports = router
+const Sequelize = require('sequelize')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -19,6 +20,15 @@ router.get('/', async (req, res, next) => {
 router.get('/recs', async (req, res, next) => {
   try {
     const recs = await req.user.getRecs()
+    // console.log(recs)
+    // const albums = await Album.findAll({
+    //   where: {
+    //     id: {
+    //       [Sequelize.Op.in]: recs
+    //     }
+    //   },
+    //   include: [{model: Format}]
+    // })
     res.send(recs)
   } catch (err) {
     next(err)
