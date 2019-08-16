@@ -39,7 +39,10 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
         where: {googleId},
         defaults: {name, email, userName}
       })
-        .then(([user]) => done(null, user))
+        .then(([user]) => {
+          console.log('find or create then')
+          done(null, user)
+        })
         .catch(done)
     }
   )
@@ -51,7 +54,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   router.get(
     '/callback',
     passport.authenticate('google', {
-      successRedirect: '/discover',
+      successRedirect: '/discover/for-you',
       failureRedirect: '/login'
     })
   )

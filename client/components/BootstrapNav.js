@@ -72,7 +72,7 @@ export class BootstrapNav extends Component {
           <>
             <Nav.Link href="/discover/for-you">Discover</Nav.Link>
             <Nav.Link href={`/user/${this.props.user.id}`}>Profile</Nav.Link>
-            <Nav.Link href="/settings">Settings</Nav.Link>
+            {/* <Nav.Link href="/settings">Settings</Nav.Link> */}
             <Nav.Link href="#" onClick={this.props.handleClick}>
               Logout
             </Nav.Link>

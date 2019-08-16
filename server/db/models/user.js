@@ -72,15 +72,17 @@ const setSaltAndPassword = user => {
   }
 }
 
-const createCollections = async user => {
+const createCollections = async (user, options) => {
+  console.log(options)
   console.log('user', user.id)
   // console.log('req', req.user.id)
   const collections = [
     {userId: user.id, type: 'collection'},
     {userId: user.id, type: 'wantlist'}
   ]
-  await Collection.create(collections[0])
-  await Collection.create(collections[1])
+  const {transaction} = options
+  await Collection.create(collections[0], {transaction})
+  await Collection.create(collections[1], {transaction})
 }
 
 User.beforeCreate(setSaltAndPassword)
