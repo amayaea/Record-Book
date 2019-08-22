@@ -6,7 +6,6 @@ import {AddToDropdown} from '../components'
 
 export const AlbumViewList = props => {
   const albums = props.albums
-  console.log(props)
   return albums.map(album => (
     <div key={album.id}>
       <Media>

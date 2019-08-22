@@ -3,7 +3,6 @@ import Toast from 'react-bootstrap/Toast'
 
 function AddToWantlistToast() {
   const [setShow, show] = useState(false)
-  console.log('add to ')
 
   return (
     <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>

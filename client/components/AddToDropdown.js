@@ -6,7 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import {addTo} from '../store'
 
 export const AddToDropdown = props => {
-  const handleClick = async (album, collectionName) => {
+  const handleClick = (album, collectionName) => {
     if (props.isLoggedIn) {
       if (collectionName === 'wantlist') {
         props.addTo(album, collectionName)
